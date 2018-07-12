@@ -10,42 +10,33 @@ app.secret_key = 'Lm4YWvQ6jYMT'
 
 
 
-posts = [
-   {
-       'title': 'First Blog Post! Hooray Me!', 
-       'content': 'First blog app using Python, Flask and MYSQL', 
-   }, 
-   {
-       'title': 'This is the second blog post',
-       'content': 'blahblahblahblahblhablhablha'
-   }
-]
-
-
 class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique=True)
     content = db.Column(db.Text(500))
    
-def __init__(self, title):
-    self.title = title
+    def __init__(self, title, content):
+        self.title = title
+        self.content = content
     
-    
-
 @app.route('/')
-@app.route('/blog')
-def blog():
-    return render_template('blog.html', posts=posts)
+@app.route('/blog', methods=['POST', 'GET'])
+def index():
 
-@app.route('/newpost')
+    blog = Blog.query.all()
+    return render_template('blog.html', blog=blog)
+
+@app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
 
     if request.method == 'POST':
-        blog_name = request.form['Name']
-        db.session.add(blog_name)
-        db.session.commit
-
+        title = request.form['title']
+        content = request.form['content']
+        newpost = Blog(title, content)
+        db.session.add(newpost)
+        db.session.commit()
+    
     return render_template('newpost.html', title='Newpost')
 
 

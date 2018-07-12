@@ -1,12 +1,24 @@
-
 {% extends "base.html" %}
+
 {% block content %}
-<h1>New Blog Post</h1>
-<form action="/newpost" method="post">
-    <label> Name</label>
-    <input type = "text" name="blog" placeholder="Enter words here:"/>
+    <h1>New Blog Post</h1>
+    <form action="/newpost" method="post">
+        <label>
+            Blog Title:
+            <input type = "text" name="title" placeholder="Enter blog title here:"/>
+        </label>
     <br>
-    <textarea name="text" placeholder="{0}"></textarea>
-    <input type = "submit"/>   
-</form>
+        <lable>
+            Content:
+            <textarea type="text" name="content" placeholder="Content goes here"></textarea>
+        </lable>
+    <br>
+        <input type = "submit"/>   
+    </form>
+    <ul>
+        {% for blog in blogs %}
+            <h2>{{blog.title}}</h2>
+            <h2>{{blog.content}}</h2>
+        {% endfor %}
+    </ul>
 {% endblock content %}
