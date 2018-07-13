@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -36,9 +36,19 @@ def newpost():
         newpost = Blog(title, content)
         db.session.add(newpost)
         db.session.commit()
+
+        return redirect('/individ?id=' + str(newpost.id))
     
     return render_template('newpost.html', title='Newpost')
 
+
+@app.route('/individ', methods=['POST', 'GET'])
+def individ():
+
+    
+    blog_id = request.args.get("id")
+    blog = Blog.query.filter_by(id=blog_id).first()
+    return render_template('individ.html', blog=blog) 
 
 if __name__ == '__main__':
     app.run()
