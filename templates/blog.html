@@ -2,7 +2,8 @@
 
 {% block content %}
     {% for blog in blogs %}
-        <h1>{{blog.title}}</h1>
+    
+        <a href = "/individ?blog={{blog.id}}"><h1>{{blog.title}}</h1></a>
         <p>{{blog.content}}</p>
     {% endfor %}
 {% endblock content %}

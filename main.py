@@ -45,7 +45,6 @@ def newpost():
 @app.route('/individ', methods=['POST', 'GET'])
 def individ():
 
-    
     blog_id = request.args.get("id")
     blog = Blog.query.filter_by(id=blog_id).first()
     return render_template('individ.html', blog=blog) 
